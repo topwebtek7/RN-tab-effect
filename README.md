@@ -1,5 +1,5 @@
 ## Usage
 
 - Clone the repository
-- Install packages `npm install`
-- Run the application `npm start`
+- Install packages `yarn install`
+- Run the application `yarn start`
