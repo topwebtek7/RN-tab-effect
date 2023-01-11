@@ -34,14 +34,10 @@ const AnimatedIcon = Animated.createAnimatedComponent(FontAwesomeIcon);
 
 const IconTab = ({ isFocusedTab, icon }) => {
   const iconSize = useRef(new Animated.Value(isFocusedTab ? 40 : 28));
-  const boxSize = useRef(new Animated.Value(isFocusedTab ? 80 : 50));
+  const boxSize = useRef(new Animated.Value(isFocusedTab ? 80 : 48));
   const topMargin = useRef(new Animated.Value(isFocusedTab ? -18 : 0));
 
   useEffect(() => {
-    console.log({isFocusedTab});
-    if (icon === 'home') {
-      console.log({isFocusedTab});
-    }
     Animated.timing(iconSize.current, {
       toValue: isFocusedTab ? 40 : 28,
       duration: 300,
@@ -49,7 +45,7 @@ const IconTab = ({ isFocusedTab, icon }) => {
     }).start();
 
     Animated.timing(boxSize.current, {
-      toValue: isFocusedTab ? 80 : 50,
+      toValue: isFocusedTab ? 80 : 48,
       duration: 300,
       useNativeDriver: false,
     }).start();
@@ -61,10 +57,6 @@ const IconTab = ({ isFocusedTab, icon }) => {
     }).start();
   }, [isFocusedTab, icon]);
 
-  if (icon === 'home') {
-    return <FulfillingBouncingCircleSpinner />
-  }
-
   return (
     <TabWrapper>
       <IconWrapper
@@ -73,6 +65,7 @@ const IconTab = ({ isFocusedTab, icon }) => {
           width: boxSize.current,
           height: boxSize.current,
           fontSize: iconSize.current,
+          zIndex: isFocusedTab ? 1 : 0,
         }}
       >
         <AnimatedIcon
@@ -82,6 +75,9 @@ const IconTab = ({ isFocusedTab, icon }) => {
           solid
         />
       </IconWrapper>
+      {isFocusedTab ? (
+        <FulfillingBouncingCircleSpinner/>
+      ) : null}
     </TabWrapper>
   );
 };

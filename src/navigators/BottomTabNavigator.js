@@ -29,7 +29,7 @@ const pages = [
 ];
 
 const TabBarBg = styled.View`
-  background-color: transparent;
+  background-color: #fff;
 `;
 
 const BottomTabNavigator = () => {
@@ -39,7 +39,7 @@ const BottomTabNavigator = () => {
       screenOptions={{
         headerShown: true,
         tabBarShowLabel: false,
-        tabBarStyle: { position: 'absolute', bottom: 30, paddingHorizontal: 20, borderTopWidth: 0 },
+        tabBarStyle: { position: 'absolute', bottom: 30, paddingHorizontal: 4, borderTopWidth: 0 },
         tabBarBackground: () => <TabBarBg />,
       }}
     >

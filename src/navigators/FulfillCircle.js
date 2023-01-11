@@ -14,13 +14,15 @@ const EpicDefaultProps = {
   duration: 1000
 };
 
-export const FulfillingBouncingCircleSpinner = ({ size, color, duration, style, ...props }) => {
+export const FulfillingBouncingCircleSpinner = ({ size, color, duration, style, children, ...props }) => {
   const animate = useRef(new Animated.Value(0)).current;
   const spinnerStyle = StyleSheet.create({
     container: {
       height: size,
       width: size,
-      position: 'relative'
+      position: 'absolute',
+      zIndex: 2,
+      top: -18,
     },
     circle: {
       height: size,
@@ -64,14 +66,6 @@ export const FulfillingBouncingCircleSpinner = ({ size, color, duration, style, 
       ]
     },
     circle: {
-      transform: [
-        {
-          scale: animate.interpolate({
-            inputRange: [0, 6, 7, 8, 9, 10],
-            outputRange: [1, 1, 1.4, 1, 1.4, 1]
-          })
-        }
-      ],
       borderColor: animate.interpolate({
         inputRange: [0, 4, 5, 9, 10],
         outputRange: ['transparent', 'transparent', color, color, 'transparent']
@@ -96,14 +90,17 @@ export const FulfillingBouncingCircleSpinner = ({ size, color, duration, style, 
       Animated.timing(animate, {
         toValue: 10,
         duration: duration * 4,
-        easing: Easing.inOut(Easing.ease)
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: false,
       })
     ).start();
   }, [animate, duration]);
 
   return (
     <Animated.View style={[style, spinnerStyle.container, animateStyle.container]} {...props}>
-      <Animated.View style={[spinnerStyle.circle, animateStyle.circle]} />
+      <Animated.View style={[spinnerStyle.circle, animateStyle.circle]}>
+        {children}
+      </Animated.View>
     </Animated.View>
   );
 };
