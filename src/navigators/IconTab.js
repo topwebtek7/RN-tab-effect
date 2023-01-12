@@ -4,14 +4,13 @@ import styled from 'styled-components/native';
 import FontAwesome from '@expo/vector-icons/FontAwesome5';
 import { FulfillingBouncingCircleSpinner } from './FulfillCircle';
 
-const TabWrapper = styled(Animated.View)`
+const TabWrapper = styled.View`
   display: flex;
   flex: 1;
   flex-direction: row;
   align-self: stretch;
   justify-content: center;
   align-content: center;
-  background-color: white;
 `;
 
 const IconWrapper = styled(Animated.View)`
@@ -20,7 +19,6 @@ const IconWrapper = styled(Animated.View)`
   height: 80px;
   justify-content: center;
   border-radius: 40px;
-  background-color: white;
 `;
 
 const FontAwesomeIcon = styled(FontAwesome)`
@@ -32,45 +30,52 @@ const FontAwesomeIcon = styled(FontAwesome)`
 
 const AnimatedIcon = Animated.createAnimatedComponent(FontAwesomeIcon);
 
-const IconTab = ({ isFocusedTab, icon }) => {
+const IconTab = ({ isFocusedTab, icon, isShrink }) => {
   const iconSize = useRef(new Animated.Value(isFocusedTab ? 40 : 28));
   const boxSize = useRef(new Animated.Value(isFocusedTab ? 80 : 48));
   const topMargin = useRef(new Animated.Value(isFocusedTab ? -18 : 0));
 
   useEffect(() => {
-    Animated.timing(iconSize.current, {
-      toValue: isFocusedTab ? 40 : 28,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+    if (isFocusedTab) {
+      Animated.timing(iconSize.current, {
+        toValue: isFocusedTab ? 40 : 28,
+        duration: 300,
+        useNativeDriver: false,
+        easing: Easing.ease,
+      }).start();
 
-    Animated.timing(boxSize.current, {
-      toValue: isFocusedTab ? 80 : 48,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+      Animated.timing(boxSize.current, {
+        toValue: isFocusedTab ? 80 : 48,
+        duration: 100,
+        useNativeDriver: false,
+      }).start();
 
-    Animated.timing(topMargin.current, {
-      toValue: isFocusedTab ? -18 : 0,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
+      Animated.timing(topMargin.current, {
+        toValue: isFocusedTab ? -18 : 0,
+        duration: 100,
+        useNativeDriver: false,
+      }).start();
+    }
   }, [isFocusedTab, icon]);
+
+  if (!isFocusedTab && isShrink) {
+    return null;
+  }
 
   return (
     <TabWrapper>
       <IconWrapper
         style={{
-          marginTop: topMargin.current,
-          width: boxSize.current,
-          height: boxSize.current,
-          fontSize: iconSize.current,
+          marginTop: isFocusedTab ? topMargin.current : 0,
+          width: isFocusedTab ? boxSize.current : 48,
+          height: isFocusedTab ? boxSize.current : 48,
           zIndex: isFocusedTab ? 1 : 0,
+          backgroundColor: isFocusedTab ? 'white' : 'transparent'
         }}
       >
         <AnimatedIcon
           name={icon}
-          size={iconSize.current}
+          size={isFocusedTab ? iconSize.current : 28}
           color={isFocusedTab ? 'red' : '#A1A1A1'}
           solid
         />
