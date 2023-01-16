@@ -1,10 +1,14 @@
 import React from 'react';
-import { Container, LargeText } from './partials/Common';
+import { Text } from 'react-native';
+import { Container } from '../components/Common';
+import CustomScrollList from '../components/CustomScrollList';
 
-const GenericScreen = ({ title }) => {
+const GenericScreen = ({ title, navigator }) => {
   return (
     <Container>
-      <LargeText>{title}</LargeText>
+      {title === 'Home' || title === 'Bitcoin' ?  (
+        <CustomScrollList navigator={navigator} />
+      ) : <Text>{title}</Text>}
     </Container>
   );
 };

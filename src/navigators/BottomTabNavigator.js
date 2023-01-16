@@ -66,7 +66,7 @@ const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         tabBarShowLabel: false,
         tabBarStyle: { position: 'absolute', bottom: 30, borderTopWidth: 0 },
         tabBarBackground: () => <TabBarBg style={{ width: bgWidth.current, left: bgLeft.current }} />,

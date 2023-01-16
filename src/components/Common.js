@@ -6,7 +6,7 @@ export const Container = styled.View`
   align-content: center;
   justify-content: center;
   flex: 1;
-  background-color: #CCCCCC;
+  background-color: black;
 `;
 
 export const LargeText = styled.Text`
